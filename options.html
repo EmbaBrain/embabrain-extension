@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EmbaBrain capture — rule customization</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/icon32.png">
+  <style>
+    :root {
+      --fg: #1f2937;
+      --muted: #6b7280;
+      --bg: #fafafa;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --brand: #2563eb;
+      --brand-hover: #1d4ed8;
+      --warn-bg: #fef3c7;
+      --warn-border: #fcd34d;
+      --warn-fg: #78350f;
+      --code-bg: #f3f4f6;
+      --danger: #b91c1c;
+      --success: #15803d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      max-width: 880px;
+      margin: 32px auto;
+      padding: 0 24px;
+      color: var(--fg);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+    h1 {
+      font-size: 24px;
+      margin: 0 0 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h1 img {
+      width: 28px;
+      height: 28px;
+    }
+    .lead {
+      color: var(--muted);
+      margin: 0 0 24px 0;
+    }
+    h2 {
+      font-size: 16px;
+      margin: 32px 0 12px 0;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    details {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+    }
+    details > summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      user-select: none;
+    }
+    details > summary:hover {
+      color: var(--brand);
+    }
+    details[open] > summary {
+      margin-bottom: 12px;
+    }
+    .help-section {
+      margin-bottom: 12px;
+    }
+    .help-section:last-child { margin-bottom: 0; }
+    .help-section h3 {
+      font-size: 13px;
+      margin: 0 0 6px 0;
+    }
+    .help-section p {
+      margin: 0 0 8px 0;
+      font-size: 13px;
+    }
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      background: var(--code-bg);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    pre {
+      padding: 8px 10px;
+      overflow-x: auto;
+      margin: 6px 0;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 13px;
+      margin: 6px 0;
+    }
+    th, td {
+      text-align: left;
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--code-bg);
+      font-weight: 600;
+    }
+    .rule-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .rule-card .info {
+      flex: 1;
+      min-width: 0;
+    }
+    .rule-card .name {
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .rule-card .meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .rule-card .meta code {
+      font-size: 11px;
+    }
+    .rule-card .actions {
+      display: flex;
+      gap: 6px;
+    }
+    .empty {
+      font-size: 13px;
+      color: var(--muted);
+      font-style: italic;
+      padding: 8px 0;
+    }
+    button {
+      font-family: inherit;
+      font-size: 13px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover { background: var(--code-bg); }
+    button.primary {
+      background: var(--brand);
+      color: #fff;
+      border-color: var(--brand);
+    }
+    button.primary:hover { background: var(--brand-hover); }
+    button.danger {
+      color: var(--danger);
+    }
+    button.danger:hover {
+      background: #fee2e2;
+    }
+    form#rule-form {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px;
+      margin-top: 12px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      font-family: inherit;
+      font-size: 13px;
+      padding: 6px 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: #fff;
+    }
+    textarea {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      resize: vertical;
+    }
+    .field {
+      margin-bottom: 14px;
+    }
+    .field-help {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .field-help code {
+      font-size: 11px;
+    }
+    .form-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+      align-items: center;
+    }
+    #status {
+      font-size: 13px;
+      min-height: 18px;
+      margin-top: 12px;
+    }
+    #status.success { color: var(--success); }
+    #status.error { color: var(--danger); }
+    .hidden { display: none !important; }
+    .warning-box {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      color: var(--warn-fg);
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>
+    <img src="icons/icon48.png" alt="">
+    Rule customization
+  </h1>
+  <p class="lead">
+    Define how the extension cleans up specific sites. Your rules supplement the
+    built-in ones — both apply when their URL patterns match.
+  </p>
+
+  <details>
+    <summary>How to write rules</summary>
+
+    <div class="help-section">
+      <h3>What a rule does</h3>
+      <p>
+        When you click <strong>Extract page</strong> on a site that matches one
+        or more rules, the extension takes a copy of the page, removes any
+        elements matched by the rules' CSS selectors, converts the result to
+        markdown, then removes any whole sections matching the rules' section
+        headings.
+      </p>
+      <p>
+        Rules are <em>removal-only</em>. They cannot add content, click
+        buttons, scroll the page, or change anything other than removing
+        specific elements or sections. See ADR-0002 / ADR-0003 for the full
+        contract.
+      </p>
+    </div>
+
+    <div class="help-section">
+      <h3>URL pattern</h3>
+      <p>A JavaScript regular expression matching the URL where the rule should fire. Examples:</p>
+      <table>
+        <tr><th>What it matches</th><th>Pattern</th></tr>
+        <tr><td>Any LinkedIn profile</td><td><code>^https://([^/]+\.)?linkedin\.com/in/</code></td></tr>
+        <tr><td>Any page on a domain</td><td><code>^https://([^/]+\.)?example\.com/</code></td></tr>
+        <tr><td>One specific page</td><td><code>^https://example\.com/specific/page/?$</code></td></tr>
+        <tr><td>Subdomains of a site</td><td><code>^https://[^/]+\.example\.com/</code></td></tr>
+      </table>
+      <p>
+        Need to test a pattern? Paste it into
+        <a href="https://regex101.com" target="_blank" rel="noopener">regex101.com</a>
+        and try it against the URL you care about. Set the flavor to JavaScript.
+      </p>
+    </div>
+
+    <div class="help-section">
+      <h3>CSS selectors (cleanup)</h3>
+      <p>One CSS selector per line. Every element matched by any selector is removed before the page is converted to markdown.</p>
+      <p><strong>Finding a selector:</strong></p>
+      <ol style="margin: 4px 0 8px 18px; padding: 0; font-size: 13px;">
+        <li>Open the page in your browser.</li>
+        <li>Right-click the element you want to remove → <strong>Inspect</strong>.</li>
+        <li>In the dev tools, look at the highlighted element's tag, classes, and id.</li>
+        <li>Write a selector using its class (<code>.foo-bar</code>), id (<code>#foo</code>), tag (<code>nav</code>), or attributes (<code>[aria-label="Promoted"]</code>).</li>
+      </ol>
+      <p>Common patterns:</p>
+      <table>
+        <tr><th>To target</th><th>Selector</th></tr>
+        <tr><td>An element by class</td><td><code>.promoted-content</code></td></tr>
+        <tr><td>An element by id</td><td><code>#cookie-banner</code></td></tr>
+        <tr><td>A specific tag</td><td><code>nav</code>, <code>footer</code>, <code>aside</code></td></tr>
+        <tr><td>By attribute</td><td><code>[aria-label*='Promoted' i]</code></td></tr>
+        <tr><td>By href substring</td><td><code>a[href*='/messaging/compose']</code></td></tr>
+      </table>
+      <p>Selectors that don't match anything are silent no-ops. Malformed selectors are ignored.</p>
+    </div>
+
+    <div class="help-section">
+      <h3>Section headings to remove</h3>
+      <p>One heading per line, case-insensitive. After the page becomes markdown, any <code>## Heading</code> matching one of these is removed along with everything under it (up to the next H1 or H2).</p>
+      <p>
+        Use this when a section's HTML container has no stable class or id you
+        can target with a CSS selector. Built-in rules use this for LinkedIn's
+        <code>Activity</code> and <code>Interests</code> sections, for example.
+      </p>
+    </div>
+
+    <div class="help-section">
+      <h3>Example: a Crunchbase rule</h3>
+      <p>If you wanted to clean up Crunchbase company pages, you might create:</p>
+      <table>
+        <tr><th>Name</th><td>Crunchbase</td></tr>
+        <tr><th>URL pattern</th><td><code>^https://([^/]+\.)?crunchbase\.com/</code></td></tr>
+        <tr><th>Cleanup selectors</th><td><code>nav</code><br><code>footer</code><br><code>[class*='paywall']</code><br><code>[data-testid='ad-banner']</code></td></tr>
+        <tr><th>Section headings</th><td><code>Sponsored content</code><br><code>People you may know</code></td></tr>
+      </table>
+      <p>(Selectors are illustrative — Crunchbase's real DOM may use different class names.)</p>
+    </div>
+
+    <div class="help-section">
+      <h3>Tips</h3>
+      <ul style="margin: 4px 0 0 18px; padding: 0; font-size: 13px;">
+        <li>Save the rule, then go to the target page and re-extract to see the effect.</li>
+        <li>If the rule isn't doing anything, the selectors probably don't match. Right-click the noisy element and inspect again.</li>
+        <li>Prefer stable selectors (BEM-style block names like <code>.scaffold-layout__aside</code>, attributes like <code>[role='complementary']</code>) over utility classes like <code>.css-1abc23d</code> which change with every site deploy.</li>
+        <li>You can always toggle <strong>Verbose mode</strong> in the popup to skip all rules and see what's there raw — useful when refining selectors.</li>
+        <li>Export your rules occasionally as a backup. Storage is per-device.</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2>Your rules</h2>
+  <p class="field-help" style="margin-bottom: 12px;">
+    All rules are yours to edit and delete. On first install the extension
+    seeds a default rule (currently LinkedIn). Use <strong>Restore defaults</strong>
+    to re-add the shipped defaults if you've deleted them.
+  </p>
+  <div id="user-rules"></div>
+  <div class="toolbar">
+    <button id="add-rule" class="primary">+ Add rule</button>
+    <button id="restore-defaults">Restore defaults</button>
+    <button id="export-rules">Export rules (JSON)</button>
+    <button id="import-rules">Import rules…</button>
+    <input type="file" id="import-file" accept=".json,application/json" class="hidden">
+  </div>
+
+  <form id="rule-form" class="hidden">
+    <h2 id="form-title" style="margin-top: 0; border-bottom: none;">Add rule</h2>
+
+    <div class="field">
+      <label for="rule-name">Name</label>
+      <input type="text" id="rule-name" required placeholder="e.g. Crunchbase, My company portal">
+      <div class="field-help">
+        Short, recognizable name. Shown in the popup tip and recorded in the
+        captured file's <code>mode:</code> field.
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="rule-pattern">URL pattern (regex)</label>
+      <input type="text" id="rule-pattern" required spellcheck="false" placeholder="^https://([^/]+\.)?example\.com/">
+      <div class="field-help">
+        JavaScript regular expression matching the URL where this rule fires.
+        See the "How to write rules" section above for examples.
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="rule-selectors">Cleanup selectors</label>
+      <textarea id="rule-selectors" rows="6" spellcheck="false" placeholder=".promoted-content
+#cookie-banner
+[aria-label*='Sponsored' i]"></textarea>
+      <div class="field-help">
+        One CSS selector per line. Each matching element will be removed before
+        the page is converted to markdown. Bad selectors are ignored.
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="rule-headings">Section headings to remove (optional)</label>
+      <textarea id="rule-headings" rows="3" spellcheck="false" placeholder="Activity
+Interests"></textarea>
+      <div class="field-help">
+        One H2 heading per line, case-insensitive. The matching section and
+        everything under it (up to the next H1 / H2) will be removed.
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="primary">Save rule</button>
+      <button type="button" id="cancel">Cancel</button>
+    </div>
+  </form>
+
+  <div id="status"></div>
+
+  <script src="site-rules.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

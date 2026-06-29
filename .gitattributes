@@ -1,0 +1,15 @@
+# Files excluded from `git archive` output. GitHub's auto-attached
+# "Source code" zip and tar.gz on Releases pages are produced by
+# `git archive`, so this is the only way to keep these paths out of
+# the publicly-downloadable source archives.
+#
+# Matches the exclusion list in .github/workflows/release.yml — keep
+# the two in sync.
+
+CLAUDE.md                     export-ignore
+README-private.md             export-ignore
+docs/adr/                     export-ignore
+docs/web-store-listing.md     export-ignore
+.github/                      export-ignore
+.gitignore                    export-ignore
+.gitattributes                export-ignore
