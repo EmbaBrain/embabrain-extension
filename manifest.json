@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "EmbaBrain capture",
-  "version": "0.10.5",
+  "version": "0.10.6",
   "description": "Capture the current page as readable markdown.",
   "permissions": ["activeTab", "scripting", "storage"],
   "background": {

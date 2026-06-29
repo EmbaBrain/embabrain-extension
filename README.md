@@ -17,13 +17,24 @@
 
 ---
 
-EmbaBrain capture turns the page you're reading into a structured
-markdown document — title, headings, content, all intact — without
-copy-paste gymnastics. Built for the people doing BD research,
-saving article reads, or building reference notes from public sources.
+EmbaBrain capture turns the page you're reading into clean,
+readable markdown with one click — and stays out of the way.
 
-The extension never sends anything to a server. Everything happens
-inside your browser.
+**Fully local.** No network calls, no telemetry, no analytics, no
+account, no upsell. Page content never leaves your browser.
+
+**Tuned for the hard pages.** Generic "page to markdown" tools
+struggle with profile pages and modern single-page apps —
+sidebars, feed widgets, video players, and promoted content all
+leak into the output. EmbaBrain capture supports curated cleanup
+rules so the result is readable prose rather than UI chrome.
+Article-style pages use Mozilla Readability for clean
+main-content extraction.
+
+**Yours to extend.** Every cleanup rule is editable, and you can
+add your own rules for sites you visit often. A built-in help
+section walks you through writing them — no CSS-selector
+experience required.
 
 ---
 
@@ -66,12 +77,15 @@ markdown-aware tool.
 engine behind Firefox's Reader View) to identify the main content
 and strip away navigation, sidebars, ads, and other chrome.
 
-**For known sites** like LinkedIn profiles, the extension uses a
-different path tuned to the site's structure. It captures the full
-page, then applies a set of cleanup rules — removing top navigation,
+**For sites with cleanup rules**, the extension uses a different
+path tuned to the site's structure. It captures the full page, then
+applies that site's cleanup rules — removing top navigation,
 sidebars, feed widgets, promoted content. The result is much richer
-than Readability would produce on a profile page, with the same
-low-noise quality.
+than Readability would produce on a profile-style page, with the
+same low-noise quality.
+
+Default rules ship with the extension and additional rules can be
+added by the user. See **Customize for any site** below.
 
 A small **Verbose** checkbox in the popup gives you a raw escape
 hatch when needed.
@@ -86,7 +100,7 @@ sites you visit often.
 Open the Options page (**⚙ Manage rules** at the bottom of the popup,
 or `chrome://extensions → EmbaBrain capture → Extension options`) to:
 
-- See and edit the default LinkedIn rule
+- See and edit the rules that shipped with the extension
 - Add rules for any site you want cleaner captures on
 - Delete rules you don't want
 - Export your rules as JSON for backup or sharing
@@ -125,6 +139,28 @@ Full [privacy policy](PRIVACY.md).
 
 The extension does not request `<all_urls>` or any other broad host
 permission. It runs only when you click the icon.
+
+---
+
+## Part of EmbaBrain
+
+EmbaBrain capture is the companion tool for
+**[EmbaBrain](https://embabrain.com)** — an AI-powered business
+development brain for technical founders, startup teams, and BD
+professionals. EmbaBrain's vault stores your company's knowledge:
+contacts, conversations, pipeline, notes. The AI reads from the
+vault to help you draft outreach, update the pipeline, and remember
+context across conversations.
+
+This extension is how you **feed the vault**. Read a useful page —
+a prospect bio, a market analysis, a conference write-up — click
+the brain icon, and you have clean markdown ready to drop into
+your EmbaBrain vault.
+
+You don't need an EmbaBrain account to use this extension; it
+works fully on its own. But if you're building your company's BD
+brain, that's what we built EmbaBrain for. Learn more at
+[embabrain.com](https://embabrain.com).
 
 ---
 

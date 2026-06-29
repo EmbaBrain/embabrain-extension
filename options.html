@@ -270,10 +270,10 @@
       <p>A JavaScript regular expression matching the URL where the rule should fire. Examples:</p>
       <table>
         <tr><th>What it matches</th><th>Pattern</th></tr>
-        <tr><td>Any LinkedIn profile</td><td><code>^https://([^/]+\.)?linkedin\.com/in/</code></td></tr>
         <tr><td>Any page on a domain</td><td><code>^https://([^/]+\.)?example\.com/</code></td></tr>
         <tr><td>One specific page</td><td><code>^https://example\.com/specific/page/?$</code></td></tr>
         <tr><td>Subdomains of a site</td><td><code>^https://[^/]+\.example\.com/</code></td></tr>
+        <tr><td>Profile pages under a path</td><td><code>^https://([^/]+\.)?example\.com/profile/</code></td></tr>
       </table>
       <p>
         Need to test a pattern? Paste it into
@@ -309,8 +309,9 @@
       <p>One heading per line, case-insensitive. After the page becomes markdown, any <code>## Heading</code> matching one of these is removed along with everything under it (up to the next H1 or H2).</p>
       <p>
         Use this when a section's HTML container has no stable class or id you
-        can target with a CSS selector. Built-in rules use this for LinkedIn's
-        <code>Activity</code> and <code>Interests</code> sections, for example.
+        can target with a CSS selector. For example, a profile-page rule might
+        strip a noisy <code>## Activity</code> or <code>## Interests</code>
+        section that the user doesn't want in their capture.
       </p>
     </div>
 
@@ -341,7 +342,7 @@
   <h2>Your rules</h2>
   <p class="field-help" style="margin-bottom: 12px;">
     All rules are yours to edit and delete. On first install the extension
-    seeds a default rule (currently LinkedIn). Use <strong>Restore defaults</strong>
+    seeds the default rules that ship with the extension. Use <strong>Restore defaults</strong>
     to re-add the shipped defaults if you've deleted them.
   </p>
   <div id="user-rules"></div>
