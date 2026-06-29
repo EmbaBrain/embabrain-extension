@@ -113,7 +113,7 @@ Extract, and only of the page you are currently viewing. Your
 customization rules are stored locally in your browser's storage
 and never transmitted anywhere.
 
-Full privacy policy: _coming soon — URL appears here once published_
+Full [privacy policy](PRIVACY.md).
 
 ### Permissions
 
